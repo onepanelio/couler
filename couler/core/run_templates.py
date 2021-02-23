@@ -87,9 +87,6 @@ def run_script(
         if input is None:
             input = []
 
-        if args is None and states._outputs_tmp is not None:
-            args = []
-
         if args is not None:
             if not isinstance(args, list):
                 args = [args]
@@ -105,14 +102,11 @@ def run_script(
             ):
                 args = args[0]
 
-            if states._outputs_tmp is not None:
-                args.extend(states._outputs_tmp)
-
-            # In case, the args include output artifact
-            # Place output artifact into the input
-            for arg in args:
-                if isinstance(arg, (OutputArtifact, OutputJob)):
-                    input.append(arg)
+        # Place output artifact into the input
+        arguments = states._outputs_tmp
+        for arg in arguments:
+            if isinstance(arg, (OutputArtifact, OutputJob)):
+                input.append(arg)
 
         # Automatically append emptyDir volume and volume mount to work with
         # Argo k8sapi executor.
@@ -159,7 +153,7 @@ def run_script(
         states.workflow.add_template(template)
 
     step_name = step_update_utils.update_step(
-        func_name, args, step_name, caller_line
+        func_name, arguments, step_name, caller_line
     )
 
     # TODO: need to switch to use field `output` directly
