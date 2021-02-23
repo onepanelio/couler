@@ -87,24 +87,12 @@ def run_script(
         if input is None:
             input = []
 
-        if args is not None:
-            if not isinstance(args, list):
-                args = [args]
-
-            # Handle case where args is a list of list type
-            # For example, [[Output, ]]
-            if (
-                isinstance(args, list)
-                and len(args) > 0
-                and isinstance(args[0], list)
-                and len(args[0]) > 0
-                and isinstance(args[0][0], Output)
-            ):
-                args = args[0]
+        if args is not None and not isinstance(args, list):
+            args = [args]
 
         # Place output artifact into the input
         arguments = states._outputs_tmp
-        for arg in arguments:
+        for arg in arguments or []:
             if isinstance(arg, (OutputArtifact, OutputJob)):
                 input.append(arg)
 
@@ -230,24 +218,12 @@ def run_container(
         if input is None:
             input = []
 
-        if args is not None:
-            if not isinstance(args, list):
-                args = [args]
-
-            # Handle case where args is a list of list type
-            # For example, [[Output, ]]
-            if (
-                isinstance(args, list)
-                and len(args) > 0
-                and isinstance(args[0], list)
-                and len(args[0]) > 0
-                and isinstance(args[0][0], Output)
-            ):
-                args = args[0]
+        if args is not None and not isinstance(args, list):
+            args = [args]
 
         # Place output artifact into the input
         arguments = states._outputs_tmp
-        for arg in arguments:
+        for arg in arguments or []:
             if isinstance(arg, (OutputArtifact, OutputJob)):
                 input.append(arg)
 
