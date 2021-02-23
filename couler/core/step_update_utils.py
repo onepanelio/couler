@@ -18,14 +18,14 @@ from couler.core import states, utils
 from couler.core.templates import OutputArtifact, Step
 
 
-def update_step(func_name, args, step_name, caller_line):
+def update_step(func_name, arguments, step_name, caller_line):
     if states.workflow.dag_mode_enabled():
         step_name = _update_dag_tasks(
             func_name,
             states._dag_caller_line,
             states._upstream_dag_task,
             states._upstream_dag_depends_logic,
-            args,
+            arguments,
             step_name=step_name,
         )
         states._upstream_dag_task = [step_name]
@@ -34,11 +34,11 @@ def update_step(func_name, args, step_name, caller_line):
             step_name = _update_steps(
                 "concurrent_func_name",
                 states._concurrent_func_line,
-                args,
+                arguments,
                 func_name,
             )
         else:
-            step_name = _update_steps(func_name, caller_line, args)
+            step_name = _update_steps(func_name, caller_line, arguments)
 
     return step_name
 
@@ -48,7 +48,7 @@ def _update_dag_tasks(
     caller_line,
     dependencies,
     depends_logic,
-    args=None,
+    arguments=None,
     template_name=None,
     step_name=None,
 ):
@@ -80,9 +80,9 @@ def _update_dag_tasks(
             task_template["template"] = template_name
 
         # configure the args
-        if args is not None:
+        if arguments is not None:
             parameters, artifacts = _get_params_and_artifacts_from_args(
-                args, function_name, prefix="tasks"
+                arguments, function_name, prefix="tasks"
             )
 
             if len(parameters) > 0:
@@ -129,7 +129,7 @@ def _update_dag_tasks(
     return function_id
 
 
-def _update_steps(function_name, caller_line, args=None, template_name=None):
+def _update_steps(function_name, caller_line, arguments=None, template_name=None):
     """
     A step in Argo YAML contains name, related template and parameters.
     Here we insert a single step into the global steps.
@@ -151,9 +151,9 @@ def _update_steps(function_name, caller_line, args=None, template_name=None):
         if states._when_prefix is not None:
             step.when = states._when_prefix
 
-        if args is not None:
+        if arguments is not None:
             parameters, artifacts = _get_params_and_artifacts_from_args(
-                args,
+                arguments,
                 template_name
                 if states._run_concurrent_lock
                 else function_name,
@@ -200,13 +200,11 @@ def _update_steps(function_name, caller_line, args=None, template_name=None):
         return function_id
 
 
-def _get_params_and_artifacts_from_args(args, input_param_name, prefix):
+def _get_params_and_artifacts_from_args(arguments, input_param_name, prefix):
     parameters = []
     artifacts = []
-    if not isinstance(args, list):
-        args = [args]
     i = 0
-    for values in args:
+    for values in arguments:
         values = couler.core.templates.output.parse_argo_output(values, prefix)
         if isinstance(values, list):
             for value in values:

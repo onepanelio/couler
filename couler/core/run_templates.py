@@ -82,6 +82,7 @@ def run_script(
         utils.argo_safe_name(step_name) if step_name is not None else func_name
     )
 
+    arguments = states._outputs_tmp
     if states.workflow.get_template(func_name) is None:
         # Generate the inputs parameter for the template
         if input is None:
@@ -91,7 +92,6 @@ def run_script(
             args = [args]
 
         # Place output artifact into the input
-        arguments = states._outputs_tmp
         for arg in arguments or []:
             if isinstance(arg, (OutputArtifact, OutputJob)):
                 input.append(arg)
@@ -214,6 +214,7 @@ def run_container(
         utils.argo_safe_name(step_name) if step_name is not None else func_name
     )
 
+    arguments = states._outputs_tmp
     if states.workflow.get_template(func_name) is None:
         # Generate the inputs parameter for the template
         if input is None:
@@ -223,7 +224,6 @@ def run_container(
             args = [args]
 
         # Place output artifact into the input
-        arguments = states._outputs_tmp
         for arg in arguments or []:
             if isinstance(arg, (OutputArtifact, OutputJob)):
                 input.append(arg)
