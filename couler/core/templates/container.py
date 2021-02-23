@@ -29,6 +29,7 @@ class Container(Template):
         image,
         command,
         args=None,
+        arguments=None,
         env=None,
         secret=None,
         resources=None,
@@ -59,6 +60,7 @@ class Container(Template):
         self.image = image
         self.command = utils.make_list_if_not(command)
         self.args = args
+        self.arguments = arguments
         self.env = env
         self.secret = secret
         self.resources = resources
@@ -72,10 +74,10 @@ class Container(Template):
         template = Template.to_dict(self)
         # Inputs
         parameters = []
-        if self.args is not None:
+        if self.arguments is not None:
             i = 0
-            for arg in self.args:
-                if not isinstance(self.args[i], OutputArtifact):
+            for arg in self.arguments:
+                if not isinstance(self.arguments[i], OutputArtifact):
                     if isinstance(arg, OutputJob):
                         for _ in range(3):
                             parameters.append(
