@@ -183,4 +183,3 @@ class Container(Template):
         if self.working_dir is not None:
             container["workingDir"] = self.working_dir
         return container
-
