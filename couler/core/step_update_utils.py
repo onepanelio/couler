@@ -206,8 +206,10 @@ def _get_params_and_artifacts_from_args(args, input_param_name, prefix):
     if not isinstance(args, list):
         args = [args]
     i = 0
-    for values in args:
-        values = couler.core.templates.output.parse_argo_output(values, prefix)
+    for artifact in args:
+        values = couler.core.templates.output.parse_argo_output(
+            artifact, prefix
+        )
         if isinstance(values, list):
             for value in values:
                 parameters.append(
@@ -220,21 +222,16 @@ def _get_params_and_artifacts_from_args(args, input_param_name, prefix):
                 )
                 i += 1
         else:
-            if isinstance(values, OutputArtifact):
-                tmp = values.value.split(".")
-                if len(tmp) < 5:
-                    raise ValueError("Incorrect step return representation")
-                step_name = tmp[1]
-                output_id = tmp[3]
-                for item in tmp[4:]:
-                    output_id = output_id + "." + item
-                if values.is_global:
-                    value = '"{{workflow.outputs.%s}}"' % output_id
-                else:
-                    value = '"{{%s.%s.%s}}"' % (prefix, step_name, output_id)
-                artifact = {"name": ".".join(tmp[5:]), "from": value}
-                if not any([value == x["from"] for x in artifacts]):
-                    artifacts.append(artifact)
+            if isinstance(artifact, OutputArtifact):
+                artifact_dict = {
+                    "name": ".".join(artifact.value.split(".")[5:]),
+                    "from": values,
+                }
+                # Check if artifact is not already added to avoid duplicates
+                if not any(
+                    [artifact_dict["from"] == x["from"] for x in artifacts]
+                ):
+                    artifacts.append(artifact_dict)
             else:
                 parameters.append(
                     {
