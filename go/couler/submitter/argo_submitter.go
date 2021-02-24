@@ -2,6 +2,7 @@ package submitter
 
 import (
 	"fmt"
+	"k8s.io/client-go/rest"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -30,7 +31,11 @@ func (submitter *ArgoWorkflowSubmitter) Submit(wf wfv1.Workflow, watch bool) (*w
 	// Use the current context in kubeconfig
 	config, err := clientcmd.BuildConfigFromFlags("", submitter.kubeConfigPath)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get the current context in the kubeconfig file %s: %s", submitter.kubeConfigPath, err)
+		fmt.Printf("failed to get the configuration from in the kubeconfig file %s: %s", submitter.kubeConfigPath, err)
+		config, err = rest.InClusterConfig()
+		if err != nil {
+			return nil, fmt.Errorf("failed to get in-cluster configuration: %w", err)
+		}
 	}
 
 	// Create the workflow client
