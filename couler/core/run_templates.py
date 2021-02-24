@@ -57,6 +57,7 @@ def run_script(
     """
     Generate an Argo script template.  For example,
     https://github.com/argoproj/argo/tree/master/examples#scripts--results.
+<<<<<<< HEAD
     :param image:
     :param command:
     :param source:
@@ -65,11 +66,25 @@ def run_script(
     :param input: input artifact for container input
     :param env: environmental variable
     :param secret:
+=======
+    :param image: Docker image name
+    :param command: entrypoint array
+    :param source: reference to function name that contains code to be executed
+    :param args: arguments to the step or task
+    :param output: output artifact for container output
+    :param input: input artifact for container input
+    :param env: environment variable
+    :param secret: secrets to mount as environment variables
+>>>>>>> upstream/master
     :param resources: CPU or memory resource config dict
     :param timeout: in seconds
     :param retry: retry policy
     :param step_name: used for annotating step .
+<<<<<<< HEAD
     :param image_pull_policy:
+=======
+    :param image_pull_policy: one of ImagePullPolicy.[Always|Never|IfNotPresent] # noqa: E501
+>>>>>>> upstream/master
     :param pool:
     :param enable_ulogfs:
     :param daemon:
@@ -209,18 +224,18 @@ def run_container(
     """
     Generate an Argo container template.  For example, the template whalesay
     in https://github.com/argoproj/argo/tree/master/examples#hello-world.
-    :param image:
-    :param command:
-    :param args:
+    :param image: Docker image name
+    :param command: entrypoint array
+    :param args: arguments to the step or task
     :param output: output artifact for container output
     :param input: input artifact for container input
-    :param env: environmental variable
-    :param secret:
+    :param env: environment variable
+    :param secret: secrets to mount as environment variables
     :param resources: CPU or memory resource config dict
     :param timeout: in seconds
     :param retry: retry policy
     :param step_name: used for annotating step .
-    :param image_pull_policy:
+    :param image_pull_policy: one of ImagePullPolicy.[Always|Never|IfNotPresent] # noqa: E501
     :param pool:
     :param enable_ulogfs:
     :param daemon:
