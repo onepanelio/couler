@@ -44,7 +44,6 @@ class MapTest(ArgoYamlTest):
         expected_container = {
             "image": "docker/whalesay:latest",
             "command": ["cowsay"],
-            "args": ['"{{inputs.parameters.para-consume-0}}"'],
         }
         self.assertDictEqual(consume_template["container"], expected_container)
 

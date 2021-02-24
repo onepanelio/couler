@@ -39,8 +39,6 @@ spec:
         image: docker/whalesay:latest
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-A-0}}"
     - name: B
       inputs:
         parameters:
@@ -49,8 +47,6 @@ spec:
         image: docker/whalesay:latest
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-B-0}}"
     - name: flip-coin-0
       script:
         image: python:3.6

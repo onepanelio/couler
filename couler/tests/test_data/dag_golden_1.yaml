@@ -46,8 +46,6 @@ spec:
         image: docker/whalesay:latest
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-A-0}}"
     - name: B
       inputs:
         parameters:
@@ -56,8 +54,6 @@ spec:
         image: docker/whalesay:latest
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-B-0}}"
     - name: C
       inputs:
         parameters:
@@ -66,8 +62,6 @@ spec:
         image: docker/whalesay:latest
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-C-0}}"
     - name: D
       inputs:
         parameters:
@@ -76,5 +70,3 @@ spec:
         image: docker/whalesay:latest
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-D-0}}"

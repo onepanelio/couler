@@ -36,8 +36,6 @@ spec:
         command:
           - bash
           - -c
-        args:
-          - "{{inputs.parameters.para-job-one-0}}"
       outputs:
         parameters:
           - name: output-id-95
@@ -52,8 +50,6 @@ spec:
         command:
           - bash
           - -c
-        args:
-          - "{{inputs.parameters.para-job-two-0}}"
       outputs:
         parameters:
           - name: output-id-95
@@ -70,6 +66,3 @@ spec:
           - bash
           - -c
           - cowsay
-        args:
-          - "{{inputs.parameters.para-summary-0}}"
-          - "{{inputs.parameters.para-summary-1}}"

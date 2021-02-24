@@ -31,8 +31,6 @@ spec:
         image: docker/whalesay
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-whalesay-0}}"
     - name: concurrent-task-1
       steps:
         - - name: whalesay-99

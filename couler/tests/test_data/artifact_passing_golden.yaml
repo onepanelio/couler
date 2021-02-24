@@ -34,8 +34,6 @@ spec:
         command:
           - bash
           - -c
-        args:
-          - "{{inputs.parameters.para-A-0}}"
         volumeMounts:
           - name: couler-out-dir-0
             mountPath: /mnt
@@ -77,6 +75,3 @@ spec:
         image: docker/whalesay:latest
         command:
           - 'cat /mnt/t1.txt'
-        args:
-          - "{{inputs.parameters.para-B-0}}"
-          - "{{inputs.artifacts.output-oss-1c392c25}}"

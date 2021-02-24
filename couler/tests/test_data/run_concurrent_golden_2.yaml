@@ -31,8 +31,6 @@ spec:
           - bash
           - -c
           - cowsay
-        args:
-          - "{{inputs.parameters.para-whalesay-0}}"
     - name: tails
       container:
         image: docker/whalesay

@@ -26,5 +26,3 @@ spec:
       container:
         image: docker/whalesay
         command: [cowsay]
-        args:
-          - "{{inputs.parameters.para-whalesay-0}}"

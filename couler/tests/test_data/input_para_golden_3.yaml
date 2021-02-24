@@ -29,8 +29,6 @@ spec:
         image: docker/whalesay
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-whalesay-0}}"
     - name: generate-number
       script:
         image: python:3.6

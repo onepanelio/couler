@@ -28,8 +28,6 @@ spec:
         command:
           - bash
           - -c
-        args:
-          - "{{inputs.parameters.para-producer-0}}"
         volumeMounts:
           - name: couler-out-dir-0
             mountPath: /mnt
@@ -49,5 +47,3 @@ spec:
         image: docker/whalesay:latest
         command:
           - cowsay
-        args:
-          - "{{inputs.parameters.para-consumer-0}}"

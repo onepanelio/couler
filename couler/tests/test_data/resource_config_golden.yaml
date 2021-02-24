@@ -23,8 +23,6 @@ spec:
           - bash
           - -c
           - cowsay
-        args:
-          - "{{inputs.parameters.para-test-resource-setup-0}}"
         resources:
           requests:
             cpu: 1

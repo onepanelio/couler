@@ -253,10 +253,6 @@ class ArgoTest(ArgoBaseTestCase):
 
         wf = couler.workflow_yaml()
         template = wf["spec"]["templates"][1]
-        # Check input parameters for step A
-        self.assertEqual(
-            template["inputs"]["parameters"], [{"name": "para-A-0"}]
-        )
         # Check output parameters for step A
         self.assertEqual(
             output_path,
@@ -468,9 +464,6 @@ class ArgoTest(ArgoBaseTestCase):
         wf = couler.workflow_yaml()
         # Check input and output parameters for step A
         template = wf["spec"]["templates"][1]
-        self.assertEqual(
-            template["inputs"]["parameters"], [{"name": "para-A-0"}]
-        )
         self.assertEqual(
             output_path,
             template["outputs"]["parameters"][0]["valueFrom"]["path"],
