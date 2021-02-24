@@ -155,10 +155,6 @@ class Container(Template):
     def container_dict(self):
         # Container part
         container = OrderedDict({"image": self.image, "command": self.command})
-        if utils.non_empty(self.args):
-            container["args"] = self._convert_args_to_input_parameters(
-                self.args
-            )
         if utils.non_empty(self.env):
             container["env"] = utils.convert_dict_to_env_list(self.env)
         if self.secret is not None:
@@ -188,18 +184,3 @@ class Container(Template):
             container["workingDir"] = self.working_dir
         return container
 
-    def _convert_args_to_input_parameters(self, args):
-        parameters = []
-        if args is not None:
-            for i in range(len(args)):
-                o = args[i]
-                if isinstance(o, OutputArtifact):
-                    para_name = o.artifact["name"]
-                    param_full_name = '"{{inputs.artifacts.%s}}"' % para_name
-                else:
-                    para_name = utils.input_parameter_name(self.name, i)
-                    param_full_name = '"{{inputs.parameters.%s}}"' % para_name
-                if param_full_name not in parameters:
-                    parameters.append(param_full_name)
-
-        return parameters
